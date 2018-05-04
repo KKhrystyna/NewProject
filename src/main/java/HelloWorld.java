@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.Iterator;
 
 public class HelloWorld {
@@ -47,17 +46,12 @@ public class HelloWorld {
                         currentProduct = currentCell.getStringCellValue();
                     } else if (currentCell.getCellTypeEnum() == CellType.NUMERIC) {
                         if (DateUtil.isCellDateFormatted(currentCell)) {
-
-                            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-                            String date = sdf.format(currentCell.getDateCellValue());
-                            java.util.Date myDate = sdf.parse(date);
-                            currentDate = new java.sql.Date(myDate.getTime());
-
+                            java.util.Date javaDate = currentCell.getDateCellValue();
+                            currentDate = new Date(javaDate.getTime());
                         } else {
                             currentCost = currentCell.getNumericCellValue();
                         }
                     }
-
                 }
                 System.out.println(currentDate + currentProduct + currentCost);
                 Record currentRecord = new Record(currentDate, currentProduct, currentCost);
